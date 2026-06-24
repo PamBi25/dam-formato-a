@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAM Formato A – Instructivo de Llenado</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;font-size:11px;background:#f0f0f0;color:#000}
+
+  /* PAGE */
+  .page{width:900px;margin:0 auto;background:#fff;padding:12px;box-shadow:0 2px 12px rgba(0,0,0,0.15)}
+
+  /* HEADER */
+  .header-top{display:flex;align-items:stretch;border:1.5px solid #000;margin-bottom:0}
+  .header-logo{width:80px;display:flex;align-items:center;justify-content:center;border-right:1px solid #000;padding:4px;font-size:9px;text-align:center;font-weight:bold}
+  .header-title{flex:1;text-align:center;padding:4px;border-right:1px solid #000}
+  .header-title h1{font-size:13px;font-weight:bold;letter-spacing:1px}
+  .header-title p{font-size:9px}
+  .header-right{width:160px;font-size:9px;padding:3px}
+  .header-right div{border-bottom:0.5px solid #999;padding:2px 0}
+
+  /* LEGEND */
+  .legend{display:flex;gap:16px;padding:8px 0;flex-wrap:wrap;border-bottom:1px solid #ccc;margin-bottom:8px}
+  .leg{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:bold}
+  .leg-box{width:14px;height:14px;border:1px solid #666;flex-shrink:0}
+  .leg-exp{background:#b3f0c8}
+  .leg-age{background:#b3d4f5}
+  .leg-aut{background:#f5b3b3}
+  .leg-none{background:#e8e8e8}
+
+  .legend-title{font-size:11px;font-weight:bold;color:#333;margin-bottom:4px}
+
+  /* FORM GRID */
+  .form-outer{border:1.5px solid #000}
+  .row{display:flex;border-bottom:1px solid #000}
+  .row:last-child{border-bottom:none}
+  .cell{border-right:1px solid #000;padding:2px 3px;position:relative;cursor:pointer;transition:filter 0.15s;min-height:28px}
+  .cell:last-child{border-right:none}
+  .cell:hover{filter:brightness(0.92)}
+  .cell-label{font-size:8px;font-weight:bold;color:#333;display:block;line-height:1.2;margin-bottom:1px}
+  .cell-value{font-size:9px;color:#555;line-height:1.3}
+  .cell-num{font-size:7px;color:#888;display:block;margin-bottom:1px}
+
+  /* COLOR ROLES */
+  .exp{background:#b3f0c8}
+  .age{background:#b3d4f5}
+  .aut{background:#f5b3b3}
+  .none{background:#e8e8e8}
+
+  /* WIDTHS */
+  .w5{width:5%}.w8{width:8%}.w10{width:10%}.w12{width:12%}.w14{width:14%}.w15{width:15%}
+  .w16{width:16%}.w18{width:18%}.w20{width:20%}.w22{width:22%}.w24{width:24%}
+  .w25{width:25%}.w28{width:28%}.w30{width:30%}.w35{width:35%}.w40{width:40%}
+  .w45{width:45%}.w50{width:50%}.w55{width:55%}.w60{width:60%}.w70{width:70%}
+  .w75{width:75%}.w80{width:80%}.w100{width:100%}
+
+  .section-label{background:#1a3c6e;color:#fff;font-size:9px;font-weight:bold;padding:2px 4px;text-transform:uppercase;letter-spacing:0.5px}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:8px;padding:20px 24px;max-width:440px;width:90%;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.25)}
+  .modal-close{position:absolute;top:10px;right:14px;font-size:18px;cursor:pointer;color:#666;line-height:1}
+  .modal-num{font-size:10px;color:#888;margin-bottom:4px}
+  .modal-title{font-size:14px;font-weight:bold;margin-bottom:8px;color:#1a3c6e}
+  .modal-badge{display:inline-block;font-size:10px;padding:3px 10px;border-radius:12px;font-weight:bold;margin-bottom:10px}
+  .badge-exp{background:#b3f0c8;color:#0a5c1e}
+  .badge-age{background:#b3d4f5;color:#0a3c6e}
+  .badge-aut{background:#f5b3b3;color:#6e0a0a}
+  .badge-none{background:#e8e8e8;color:#555}
+  .modal-desc{font-size:12px;line-height:1.7;color:#333}
+  .modal-tip{margin-top:10px;background:#fffbe6;border-left:3px solid #f0a500;padding:7px 10px;font-size:11px;color:#555;border-radius:0 4px 4px 0}
+
+  /* SECTION HEADERS inside form */
+  .sec-header{background:#1a3c6e;color:#fff;font-size:8px;font-weight:bold;padding:2px 4px;width:100%;letter-spacing:0.5px;text-transform:uppercase}
+
+  /* TITLE BAR */
+  .title-bar{background:#1a3c6e;color:#fff;padding:10px 14px;margin-bottom:10px;border-radius:4px}
+  .title-bar h2{font-size:15px;font-weight:bold;letter-spacing:0.5px}
+  .title-bar p{font-size:10px;opacity:0.85;margin-top:2px}
+
+  /* INSTRUCTIONS */
+  .instr{font-size:10px;color:#555;margin-bottom:8px;padding:6px 10px;background:#f7f7f7;border-radius:4px;border:0.5px solid #ddd}
+
+  /* SECTION 7 serial rows */
+  .serie-row{display:flex;border-bottom:0.5px solid #aaa}
+  .serie-row:last-child{border-bottom:none}
+
+  /* PRINT */
+  @media print{
+    body{background:#fff}
+    .modal-overlay{display:none!important}
+    .instr,.legend,.title-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .exp,.age,.aut,.none{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="title-bar">
+    <h2>&#128196; DAM Formato A — Instructivo Interactivo de Llenado</h2>
+    <p>Haz clic en cualquier casilla del formulario para ver quién la llena y cómo. Basado en el instructivo oficial SUNAT (DESPA-IT.00.04).</p>
+  </div>
+
+  <div class="instr">&#128161; <strong>Instrucciones:</strong> Haz clic sobre cada casilla coloreada del formulario para ver la explicación detallada. Los colores indican el responsable de cada campo.</div>
+
+  <div class="legend">
+    <div class="legend-title">Leyenda:</div>
+    <div class="leg"><div class="leg-box leg-exp"></div>Exportador / Importador (tú)</div>
+    <div class="leg"><div class="leg-box leg-age"></div>Agente de Aduanas</div>
+    <div class="leg"><div class="leg-box leg-aut"></div>Autoridad Aduanera (SUNAT)</div>
+    <div class="leg"><div class="leg-box leg-none"></div>No llenar / Sistema</div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-outer">
+
+    <!-- FILA CABECERA -->
+    <div class="row">
+      <div class="cell age w25" onclick="show('aduana')">
+        <span class="cell-label">ADUANA – CÓDIGO</span>
+        <span class="cell-value">Nombre y código de la intendencia</span>
+      </div>
+      <div class="cell age w15" onclick="show('norden')">
+        <span class="cell-label">N° ORDEN</span>
+        <span class="cell-value">XXXXXX</span>
+      </div>
+      <div class="cell age w18" onclick="show('destinacion')">
+        <span class="cell-label">DESTINACIÓN</span>
+        <span class="cell-value">10 / 40 / etc.</span>
+      </div>
+      <div class="cell age w15" onclick="show('modalidad')">
+        <span class="cell-label">MODALIDAD</span>
+        <span class="cell-value">0-0 / 1-0</span>
+      </div>
+      <div class="cell age w12" onclick="show('tipodesp')">
+        <span class="cell-label">TIPO DESPACHO</span>
+        <span class="cell-value">Código</span>
+      </div>
+      <div class="cell none w15" onclick="show('numdecl')">
+        <span class="cell-label">N° DECLARACIÓN</span>
+        <span class="cell-value" style="color:#999;font-style:italic">No llenar</span>
+      </div>
+    </div>
+
+    <!-- SEC 1 IDENTIFICACION -->
+    <div class="row"><div class="sec-header w100">1. Identificación</div></div>
+    <div class="row">
+      <div class="cell age w40" onclick="show('s1-1')">
+        <span class="cell-num">1.1</span>
+        <span class="cell-label">Importador / Exportador</span>
+        <span class="cell-value">Nombre o razón social</span>
+      </div>
+      <div class="cell age w25" onclick="show('s1-2')">
+        <span class="cell-num">1.2</span>
+        <span class="cell-label">Código y Doc. Identificación</span>
+        <span class="cell-value">DNI / RUC / Pasaporte</span>
+      </div>
+      <div class="cell age w35" onclick="show('s1-3')">
+        <span class="cell-num">1.3</span>
+        <span class="cell-label">Dirección</span>
+        <span class="cell-value">Domicilio del titular</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="cell age w20" onclick="show('s1-4')">
+        <span class="cell-num">1.4</span>
+        <span class="cell-label">Código Ubigeo</span>
+        <span class="cell-value">Dept. / Prov. / Dist.</span>
+      </div>
+      <div class="cell none w80" style="background:#f5f5f5;cursor:default">
+        <span class="cell-value" style="color:#bbb;font-style:italic;font-size:9px">espacio de firma / uso interno</span>
+      </div>
+    </div>
+
+    <!-- SEC 2 REGISTRO ADUANA -->
+    <div class="row"><div class="sec-header w100">2. Registro de Aduana</div></div>
+    <div class="row">
+      <div class="cell aut w35" onclick="show('s2-decl')">
+        <span class="cell-num">2</span>
+        <span class="cell-label">N° Declaración</span>
+        <span class="cell-value">Aduana-Año-Régimen-Nº-Tipo-DV</span>
+      </div>
+      <div class="cell aut w25" onclick="show('s2-fecha')">
+        <span class="cell-label">Fecha de numeración</span>
+        <span class="cell-value">dd/mm/aaaa</span>
+      </div>
+      <div class="cell aut w40" onclick="show('s2-canal')">
+        <span class="cell-label">Sujeto a canal</span>
+        <span class="cell-value">&#128308; Rojo &nbsp; &#128992; Naranja &nbsp; &#128994; Verde</span>
+      </div>
+    </div>
+
+    <!-- SEC 3 TRANSPORTE -->
+    <div class="row"><div class="sec-header w100">3. Transporte</div></div>
+    <div class="row">
+      <div class="cell age w35" onclick="show('s3-1')">
+        <span class="cell-num">3.1</span>
+        <span class="cell-label">Empresa de Transporte – RUC</span>
+        <span class="cell-value">Razón social y RUC</span>
+      </div>
+      <div class="cell age w25" onclick="show('s3-2')">
+        <span class="cell-num">3.2</span>
+        <span class="cell-label">N° Manifiesto</span>
+        <span class="cell-value">Aduana-Año-N°</span>
+      </div>
+      <div class="cell age w20" onclick="show('s3-3')">
+        <span class="cell-num">3.3</span>
+        <span class="cell-label">Vía Transporte – Cód.</span>
+        <span class="cell-value">1=Mar. 4=Aér. 7=Terr.</span>
+      </div>
+      <div class="cell age w20" onclick="show('s3-4')">
+        <span class="cell-num">3.4</span>
+        <span class="cell-label">Fecha Término Descarga</span>
+        <span class="cell-value">dd/mm/aaaa</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="cell age w40" onclick="show('s3-5')">
+        <span class="cell-num">3.5</span>
+        <span class="cell-label">Empresa Transporte (Tránsito/Reembarque) – Cód.</span>
+        <span class="cell-value">Solo para tránsito/reembarque</span>
+      </div>
+      <div class="cell age w30" onclick="show('s3-6')">
+        <span class="cell-num">3.6</span>
+        <span class="cell-label">Unidad Transporte (Tránsito/Reembarque)</span>
+        <span class="cell-value">Nombre nave o matrícula</span>
+      </div>
+      <div class="cell age w30" onclick="show('s3-7')">
+        <span class="cell-num">3.7</span>
+        <span class="cell-label">Aduana Destino/Salida – Cód.</span>
+        <span class="cell-value">Para tránsito, reembarque y exportación</span>
+      </div>
+    </div>
+
+    <!-- SEC 4 ALMACEN -->
+    <div class="row"><div class="sec-header w100">4. Almacén Aduanero</div></div>
+    <div class="row">
+      <div class="cell age w40" onclick="show('s4-1')">
+        <span class="cell-num">4.1</span>
+        <span class="cell-label">Depósito Temporal – RUC</span>
+        <span class="cell-value">Razón social y RUC del depósito</span>
+      </div>
+      <div class="cell age w35" onclick="show('s4-2')">
+        <span class="cell-num">4.2</span>
+        <span class="cell-label">Depósito Aduanero – RUC</span>
+        <span class="cell-value">Solo régimen de Depósito Aduanero</span>
+      </div>
+      <div class="cell exp w25" onclick="show('s4-3')">
+        <span class="cell-num">4.3</span>
+        <span class="cell-label">Plazo Solicitado</span>
+        <span class="cell-value">Meses (o días en tránsito)</span>
+      </div>
+    </div>
+
+    <!-- SEC 5 TRANSACCION -->
+    <div class="row"><div class="sec-header w100">5. Transacción</div></div>
+    <div class="row">
+      <div class="cell age w50" onclick="show('s5-1')">
+        <span class="cell-num">5.1</span>
+        <span class="cell-label">Entidad Financiera – Código</span>
+        <span class="cell-value">Banco que intervino en la operación</span>
+      </div>
+      <div class="cell age w50" onclick="show('s5-2')">
+        <span class="cell-num">5.2</span>
+        <span class="cell-label">Modalidad de Pago – Código</span>
+        <span class="cell-value">1=Contado 2=Crédito 6=Anticipado 9=Sin pago</span>
+      </div>
+    </div>
+
+    <!-- SEC 6 VALOR ADUANA -->
+    <div class="row"><div class="sec-header w100">6. Valor Aduana</div></div>
+    <div class="row">
+      <div class="cell exp w20" onclick="show('s6-1')">
+        <span class="cell-num">6.1</span>
+        <span class="cell-label">FOB US$ / Valor cláusula venta</span>
+        <span class="cell-value">Valor de la factura comercial</span>
+      </div>
+      <div class="cell age w20" onclick="show('s6-2')">
+        <span class="cell-num">6.2</span>
+        <span class="cell-label">Flete US$</span>
+        <span class="cell-value">Flete internacional</span>
+      </div>
+      <div class="cell age w20" onclick="show('s6-3')">
+        <span class="cell-num">6.3</span>
+        <span class="cell-label">Seguro US$</span>
+        <span class="cell-value">Prima de seguro</span>
+      </div>
+      <div class="cell age w20" onclick="show('s6-4')">
+        <span class="cell-num">6.4</span>
+        <span class="cell-label">Total Ajustes</span>
+        <span class="cell-value">Suma ajustes Formato B</span>
+      </div>
+      <div class="cell age w20" onclick="show('s6-5')">
+        <span class="cell-num">6.5</span>
+        <span class="cell-label">Valor Aduana US$</span>
+        <span class="cell-value">CIF total (6.1+6.2+6.3+6.4)</span>
+      </div>
+    </div>
+
+    <!-- SEC 7 DECLARACION -->
+    <div class="row"><div class="sec-header w100">7. Declaración de Mercancías (serie)</div></div>
+
+    <!-- Serie sub-header -->
+    <div class="row" style="background:#e8eef5">
+      <div class="cell age w8" style="background:#e8eef5" onclick="show('s7-1')">
+        <span class="cell-num">7.1</span>
+        <span class="cell-label">N° Serie</span>
+      </div>
+      <div class="cell age w8" onclick="show('s7-6')" style="background:#e8eef5">
+        <span class="cell-num">7.6</span>
+        <span class="cell-label">Pto. Embarque</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-7')" style="background:#e8eef5">
+        <span class="cell-num">7.7</span>
+        <span class="cell-label">Fecha Embarque</span>
+      </div>
+      <div class="cell age w18" onclick="show('s7-8')" style="background:#e8eef5">
+        <span class="cell-num">7.8</span>
+        <span class="cell-label">Doc. Transporte – Detalle</span>
+      </div>
+      <div class="cell age w18" onclick="show('s7-9')" style="background:#e8eef5">
+        <span class="cell-num">7.9</span>
+        <span class="cell-label">N° Cert. Origen / Fecha</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-10')" style="background:#e8eef5">
+        <span class="cell-num">7.10</span>
+        <span class="cell-label">Cant. Unid. Comercial</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-12')" style="background:#e8eef5">
+        <span class="cell-num">7.12</span>
+        <span class="cell-label">Cant. Bultos</span>
+      </div>
+      <div class="cell age w8" onclick="show('s7-13')" style="background:#e8eef5">
+        <span class="cell-num">7.13</span>
+        <span class="cell-label">Clase Bultos</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-14')" style="background:#e8eef5">
+        <span class="cell-num">7.14/15</span>
+        <span class="cell-label">Peso Neto/Bruto kg</span>
+      </div>
+    </div>
+    <div class="row" style="background:#e8eef5">
+      <div class="cell age w12" onclick="show('s7-19')" style="background:#e8eef5">
+        <span class="cell-num">7.19</span>
+        <span class="cell-label">Subpartida Nac. – DV</span>
+        <span class="cell-value">10 dígitos</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-26')" style="background:#e8eef5">
+        <span class="cell-num">7.26</span>
+        <span class="cell-label">País Origen</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-27')" style="background:#e8eef5">
+        <span class="cell-num">7.27</span>
+        <span class="cell-label">País Adquisición/Destino</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-30')" style="background:#e8eef5">
+        <span class="cell-num">7.30</span>
+        <span class="cell-label">FOB US$</span>
+      </div>
+      <div class="cell age w10" onclick="show('s7-31')" style="background:#e8eef5">
+        <span class="cell-num">7.31/32</span>
+        <span class="cell-label">Flete / Seguro</span>
+      </div>
+      <div class="cell age w38" onclick="show('s7-35')" style="background:#e8eef5">
+        <span class="cell-num">7.35</span>
+        <span class="cell-label">Descripción de Mercancía</span>
+        <span class="cell-value">Denominación comercial, presentación, materiales, uso...</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="cell age w35" onclick="show('s7-36')">
+        <span class="cell-num">7.36</span>
+        <span class="cell-label">N° Factura Comercial – Fecha</span>
+        <span class="cell-value">Hasta 3 documentos en formato físico</span>
+      </div>
+      <div class="cell age w40" onclick="show('s7-37')">
+        <span class="cell-num">7.37</span>
+        <span class="cell-label">Información Complementaria</span>
+        <span class="cell-value">Mercanc. restringidas, beneficios tributarios, etc.</span>
+      </div>
+      <div class="cell aut w25" onclick="show('s7-38')">
+        <span class="cell-num">7.38 / 7.39</span>
+        <span class="cell-label">Observación / Tipo Observación</span>
+        <span class="cell-value">Incidencias del funcionario aduanero</span>
+      </div>
+    </div>
+
+    <!-- SEC 8 DECLARANTE -->
+    <div class="row"><div class="sec-header w100">8. Declarante</div></div>
+    <div class="row">
+      <div class="cell age w100" onclick="show('s8')">
+        <span class="cell-num">8</span>
+        <span class="cell-label">Nombre / Razón Social – RUC – Fecha – Firma y Sello del Agente de Aduanas</span>
+        <span class="cell-value">El despachador de aduanas firma como declarante responsable</span>
+      </div>
+    </div>
+
+    <!-- SEC 9 CONTENEDORES -->
+    <div class="row"><div class="sec-header w100">9. N° Contenedores / Precintos</div></div>
+    <div class="row">
+      <div class="cell age w100" onclick="show('s9')">
+        <span class="cell-num">9</span>
+        <span class="cell-label">Marcas, N° de Bultos, Contenedores y Precintos</span>
+        <span class="cell-value">Identificación de la carga</span>
+      </div>
+    </div>
+
+    <!-- SEC 10-15 AUTORIDAD -->
+    <div class="row"><div class="sec-header w100">10–15. Secciones reservadas para la Autoridad Aduanera / Otros operadores</div></div>
+    <div class="row">
+      <div class="cell aut w35" onclick="show('s10')">
+        <span class="cell-num">10</span>
+        <span class="cell-label">Diligencia Aduanera</span>
+        <span class="cell-value">Fecha revisión, canal, firma funcionario</span>
+      </div>
+      <div class="cell aut w25" onclick="show('s11')">
+        <span class="cell-num">11</span>
+        <span class="cell-label">Control Funcionario Aduanero</span>
+        <span class="cell-value">Solo tránsito y regularizaciones</span>
+      </div>
+      <div class="cell aut w20" onclick="show('s12')">
+        <span class="cell-num">12</span>
+        <span class="cell-label">Control Embarque / Tornaguía</span>
+        <span class="cell-value">Tránsito o reembarque</span>
+      </div>
+      <div class="cell aut w20" onclick="show('s15')">
+        <span class="cell-num">15</span>
+        <span class="cell-label">Validación de Datos</span>
+        <span class="cell-value">Generado por SIGAD-SUNAT</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="cell aut w50" onclick="show('s13')">
+        <span class="cell-num">13</span>
+        <span class="cell-label">Zona Primaria (export.) / Depósito Aduanero</span>
+        <span class="cell-value">Fecha y cantidad de bultos al ingreso a zona primaria</span>
+      </div>
+      <div class="cell aut w50" onclick="show('s14')">
+        <span class="cell-num">14</span>
+        <span class="cell-label">Transportista</span>
+        <span class="cell-value">Bultos exportados, peso, fecha/hora último embarque</span>
+      </div>
+    </div>
+
+  </div><!-- /form-outer -->
+
+  <div style="margin-top:10px;font-size:9px;color:#999;text-align:center">
+    Basado en el instructivo oficial SUNAT DESPA-IT.00.04 — Resolución 041-2010/SUNAT/A | Formato A de la DAM
+  </div>
+
+</div><!-- /page -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <span class="modal-close" onclick="closeAll()">✕</span>
+    <div class="modal-num" id="m-num"></div>
+    <div class="modal-title" id="m-title"></div>
+    <div id="m-badge"></div>
+    <div class="modal-desc" id="m-desc"></div>
+    <div class="modal-tip" id="m-tip" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+const INFO = {
+  aduana:{num:"Cabecera",title:"Aduana – Código",who:"age",desc:"Se indica el nombre y código de la intendencia de aduana bajo cuya jurisdicción se realiza el despacho aduanero. El agente de aduanas lo consigna según la aduana donde se registra el despacho.",tip:"Ejemplo: MARITIMA DEL CALLAO – código 118."},
+  norden:{num:"Cabecera",title:"N° Orden",who:"age",desc:"Número único de 6 caracteres asignado por el agente de aduanas para identificar el despacho. El agente debe reiniciar la numeración el 1° de enero de cada año.",tip:"El agente de aduanas es quien lleva este correlativo interno."},
+  destinacion:{num:"Cabecera",title:"Destinación",who:"age",desc:"Código del régimen aduanero solicitado: 10=Importación para el Consumo, 40=Exportación Definitiva, 20=Admisión Temporal, 70=Depósito Aduanero, 80=Tránsito, etc. Lo registra el agente.",tip:"El exportador debe informar al agente cuál régimen necesita."},
+  modalidad:{num:"Cabecera",title:"Modalidad",who:"age",desc:"Código de la modalidad de despacho: 0-0=Excepcional, 1-0=Anticipado, 0-1=Envío de Urgencia, 0-2=Socorro. El agente lo consigna según el tipo de operación.",tip:"El despacho anticipado (1-0) es el más común en importaciones regulares."},
+  tipodesp:{num:"Cabecera",title:"Tipo Despacho",who:"age",desc:"Código del tipo de despacho según el régimen. Ejemplo en importación: 1=Normal, 2=Feria, 4=Hidrocarburos. El agente lo indica cuando la autoridad aduanera lo requiere.",tip:""},
+  numdecl:{num:"Cabecera",title:"N° Declaración de Importación",who:"none",desc:"Esta casilla NO se llena ni por el exportador/importador ni por el agente. El número de declaración es generado automáticamente por el sistema SIGAD de SUNAT al momento de la numeración.",tip:""},
+  's1-1':{num:"1.1",title:"Importador / Exportador",who:"age",desc:"El agente de aduanas consigna el nombre o razón social del importador o exportador. Debe corresponder exactamente al registrado ante SUNAT (según RUC). En exportación se indica el nombre del exportador/consignante.",tip:"El importador/exportador debe entregar sus datos de RUC actualizados al agente."},
+  's1-2':{num:"1.2",title:"Código y Documento de Identificación",who:"age",desc:"El agente registra el tipo y número de documento: Código 3=DNI, 4=RUC, 6=Pasaporte, 7=Carnet de Extranjería, 8=Organismos Internacionales.",tip:"Las empresas usan código 4 (RUC). Las personas naturales usan código 3 (DNI)."},
+  's1-3':{num:"1.3",title:"Dirección del Importador / Exportador",who:"age",desc:"El agente consigna el domicilio fiscal del dueño, consignatario o importador, tomándolo de los documentos entregados por el cliente y de la ficha RUC de SUNAT.",tip:"Debe coincidir con el domicilio declarado en SUNAT."},
+  's1-4':{num:"1.4",title:"Código Ubicación Geográfica (UBIGEO)",who:"age",desc:"El agente indica el código de ubicación geográfica (Departamento, Provincia, Distrito) correspondiente al domicilio del importador/exportador.",tip:""},
+  's2-decl':{num:"2",title:"N° Declaración",who:"aut",desc:"USO EXCLUSIVO DE LA AUTORIDAD ADUANERA. Compuesto por: Código de Aduana + Año de numeración + Código de régimen + Número de declaración + Tipo de documento + Dígito verificador.",tip:"Ni el exportador/importador ni el agente intervienen en esta casilla."},
+  's2-fecha':{num:"2",title:"Fecha de Numeración",who:"aut",desc:"USO EXCLUSIVO DE LA AUTORIDAD ADUANERA. Fecha en que la SUNAT asigna el número de declaración a la DAM transmitida electrónicamente por el agente.",tip:""},
+  's2-canal':{num:"2",title:"Canal Asignado",who:"aut",desc:"USO EXCLUSIVO DE LA AUTORIDAD ADUANERA. La SUNAT asigna el canal de control: Canal Verde (sin revisión), Canal Naranja (revisión documentaria), Canal Rojo (reconocimiento físico de la mercancía).",tip:"El canal determina el nivel de control al que será sometida la mercancía."},
+  's3-1':{num:"3.1",title:"Empresa de Transporte – RUC",who:"age",desc:"El agente consigna el nombre o razón social de la empresa transportista y su RUC. En transporte marítimo se consigna el RUC del Agente Marítimo.",tip:"El dato se obtiene del documento de transporte (B/L, AWB, etc.) entregado al agente."},
+  's3-2':{num:"3.2",title:"N° Manifiesto",who:"age",desc:"El agente indica: código de la aduana de ingreso (o salida) – año de emisión – número de manifiesto de carga. Este número lo proporciona el documento de transporte.",tip:""},
+  's3-3':{num:"3.3",title:"Vía de Transporte – Código",who:"age",desc:"El agente registra el código: 1=Marítimo, 2=Fluvial, 3=Lacustre, 4=Aéreo, 5=Postal, 6=Ferroviario, 7=Carretera/Terrestre, 8=Tuberías, 9=Otras.",tip:""},
+  's3-4':{num:"3.4",title:"Fecha Término Descarga / Embarque",who:"age",desc:"En importación: fecha en que culmina la descarga de la mercancía. En exportación: fecha del término del último embarque. El agente la registra según los documentos del transportista.",tip:""},
+  's3-5':{num:"3.5",title:"Empresa Transporte (Tránsito/Reembarque)",who:"age",desc:"Solo se llena en regímenes de Tránsito Aduanero o Reembarque. El agente indica la empresa que realiza el traslado y su código asignado por Aduanas.",tip:""},
+  's3-6':{num:"3.6",title:"Unidad de Transporte (Tránsito/Reembarque)",who:"age",desc:"Solo para tránsito o reembarque. El agente indica el nombre de la nave o matrícula del vehículo de transporte. Si hay varias unidades, se transmiten electrónicamente.",tip:""},
+  's3-7':{num:"3.7",title:"Aduana Destino/Salida – Código",who:"age",desc:"En tránsito: la aduana de destino. En reembarque: la aduana de salida. En exportación: la intendencia de aduana por donde sale la mercancía del país.",tip:""},
+  's4-1':{num:"4.1",title:"Depósito Temporal – RUC",who:"age",desc:"El agente consigna la razón social y RUC del depósito temporal donde se encuentra (o se ubicará) la mercancía. También puede ser la dirección del almacén del importador si corresponde.",tip:"El importador/exportador debe informar al agente en qué depósito está su mercancía."},
+  's4-2':{num:"4.2",title:"Depósito Aduanero – RUC",who:"age",desc:"Solo para el régimen de Depósito Aduanero o cuando la mercancía provenga de este régimen. El agente registra la razón social y RUC del depósito aduanero.",tip:""},
+  's4-3':{num:"4.3",title:"Plazo Solicitado",who:"exp",desc:"EL EXPORTADOR O IMPORTADOR solicita este plazo ante la autoridad aduanera. Se utiliza para regímenes que requieren plazo: Depósito Aduanero, Admisión Temporal para Reexportación, Admisión Temporal para Perfeccionamiento Activo, Tránsito Aduanero y Reembarque.",tip:"Se expresa en meses (la mayoría de regímenes) o en días (tránsito y reembarque)."},
+  's5-1':{num:"5.1",title:"Entidad Financiera – Código",who:"age",desc:"El agente indica el nombre y código de la entidad financiera que intervino en la operación de comercio exterior (el banco a través del cual se pagó la importación/exportación).",tip:"El importador/exportador informa al agente qué banco utilizó para el pago."},
+  's5-2':{num:"5.2",title:"Modalidad de Pago – Código",who:"age",desc:"El agente registra la modalidad: 1=Pago al contado, 2=Pago a crédito, 6=Pago anticipado, 7=Otras (especifique), 8=Pago mixto, 9=Sin pago. Se toma de la factura comercial.",tip:"El importador/exportador informa la forma de pago pactada con el proveedor/comprador."},
+  's6-1':{num:"6.1",title:"FOB US$ / Valor Cláusula de Venta",who:"exp",desc:"El EXPORTADOR o IMPORTADOR proporciona este dato a través de la factura comercial. En importación es el valor FOB total en USD. En exportación es el valor según el INCOTERM pactado. El agente lo registra en base al documento del cliente.",tip:"Este es el dato clave que TÚ proporcionas: el valor de tu mercancía en la factura."},
+  's6-2':{num:"6.2",title:"Flete US$ / Comisión Exterior",who:"age",desc:"El agente calcula y registra el valor del flete desde el puerto de embarque hasta el puerto de destino, expresado en USD. Lo obtiene del documento de transporte (conocimiento de embarque, AWB, etc.).",tip:""},
+  's6-3':{num:"6.3",title:"Seguro US$",who:"age",desc:"El agente consigna el valor total de las primas de seguro en USD, o el valor establecido según la tabla de seguros vigente de SUNAT si la mercancía no está asegurada.",tip:""},
+  's6-4':{num:"6.4",title:"Total Ajustes",who:"age",desc:"El agente calcula la suma de los ajustes efectuados en la Declaración Jurada del Valor (Formato B, casilla 5.10). Puede ser positivo o negativo.",tip:""},
+  's6-5':{num:"6.5",title:"Valor Aduana US$ / Valor Neto de Entrega",who:"age",desc:"El agente calcula la suma de los valores anteriores (6.1+6.2+6.3+6.4). En importación es el valor CIF. En exportación es el valor FOB neto de entrega.",tip:"Este es el valor base para el cálculo de los tributos aduaneros."},
+  's7-1':{num:"7.1",title:"N° Serie / Total Series",who:"age",desc:"El agente numera secuencialmente cada serie sobre el total. Ejemplo: 1/2 para la primera serie de dos. Una serie comprende mercancías clasificadas en una misma subpartida arancelaria.",tip:""},
+  's7-6':{num:"7.6",title:"Puerto de Embarque – Código",who:"age",desc:"El agente indica el puerto de embarque inicial de la mercancía con destino al país (importación), o el lugar de embarque de la mercancía exportada. En vía terrestre, se pone el código de la aduana de salida.",tip:""},
+  's7-7':{num:"7.7",title:"Fecha de Embarque",who:"age",desc:"En importación: el agente indica la fecha de embarque de la mercancía con destino al país. En exportación: NO llenar (queda en blanco).",tip:""},
+  's7-8':{num:"7.8",title:"Documento de Transporte – Detalle",who:"age",desc:"El agente indica el número del documento de transporte: Conocimiento de Embarque (B/L) para marítimo, Carta Porte Aéreo (AWB) para aéreo, o Carta Porte Terrestre.",tip:"El importador/exportador debe entregar este documento al agente."},
+  's7-9':{num:"7.9",title:"N° Certificado de Origen / Fecha",who:"age",desc:"El agente lo consigna cuando la mercancía debe acogerse a un tratado comercial (ALADI, Comunidad Andina, TLC, etc.) que requiere certificado de origen para reducir o eliminar aranceles. En exportación: NO llenar.",tip:""},
+  's7-10':{num:"7.10",title:"Cantidad Unidad Comercial",who:"age",desc:"El agente indica la sumatoria de las unidades comerciales de las mercancías declaradas en la serie. En exportación: NO llenar.",tip:""},
+  's7-12':{num:"7.12",title:"Cantidad de Bultos",who:"age",desc:"El agente registra el total de bultos que contienen las mercancías de la serie, según el manifiesto de carga. Si un bulto contiene mercancías de varias series, solo se indica en la primera.",tip:""},
+  's7-13':{num:"7.13",title:"Clase de Bultos",who:"age",desc:"El agente indica el código del tipo de embalaje: cajas, paletas, contenedores, sacos, etc. El código lo toma de las tablas generales de SUNAT.",tip:""},
+  's7-14':{num:"7.14 / 7.15",title:"Peso Neto y Peso Bruto (kg)",who:"age",desc:"El agente registra el peso neto y el peso bruto en kilogramos de las mercancías de la serie. Los datos los toma de la factura comercial y del manifiesto de carga entregados por el importador/exportador.",tip:""},
+  's7-19':{num:"7.19",title:"Subpartida Nacional – Dígito Verificador",who:"age",desc:"El AGENTE DE ADUANAS clasifica la mercancía y determina la subpartida arancelaria de 10 dígitos según el Arancel de Aduanas vigente, más su dígito verificador. Esta es una de las funciones técnicas más importantes del agente.",tip:"Una clasificación incorrecta puede generar pagos indebidos o sanciones. El agente es el especialista en esto."},
+  's7-26':{num:"7.26",title:"País de Origen",who:"age",desc:"En importación: el agente indica el código del país donde fue manufacturada, cultivada o extraída la mercancía. En exportación: se indica el código UBIGEO del lugar de producción en Perú.",tip:""},
+  's7-27':{num:"7.27",title:"País de Adquisición / País de Destino",who:"age",desc:"En importación: el agente indica el país del que se adquirió la mercancía (puede diferir del país de origen). En exportación: el agente indica el país al que se destinan las mercancías.",tip:""},
+  's7-30':{num:"7.30",title:"FOB US$ (por serie)",who:"age",desc:"El agente calcula y consigna la suma de los valores FOB en dólares de los ítems declarados en el Formato B que corresponden a esta serie.",tip:""},
+  's7-31':{num:"7.31 / 7.32",title:"Flete y Seguro US$ (por serie)",who:"age",desc:"El agente indica el flete y el seguro en USD correspondientes a esta serie. En exportación: NO llenar (quedan en blanco).",tip:""},
+  's7-35':{num:"7.35",title:"Descripción de Mercancía",who:"age",desc:"El agente redacta la descripción técnica con: 1) Denominación comercial o especie, 2) Forma de presentación/conservación/proceso de fabricación, 3) Materiales y composición porcentual, 4) Uso/aplicación, 5) Otras características (marca, modelo, serie). No se debe poner la descripción del arancel.",tip:"El importador/exportador debe entregar al agente los catálogos, fichas técnicas y documentos que permitan una descripción precisa."},
+  's7-36':{num:"7.36",title:"N° Factura Comercial – Fecha",who:"age",desc:"El agente registra el número y fecha de la factura comercial (o contrato) con la que se realiza la transacción. En el formato físico se indican hasta 3 documentos; en la transmisión electrónica se envía la totalidad.",tip:"El importador/exportador debe entregar la factura comercial original al agente."},
+  's7-37':{num:"7.37",title:"Información Complementaria",who:"age",desc:"El agente (con datos del importador/exportador) consigna información específica: número de documentos de control para mercancías restringidas, beneficios tributarios (discapacitados, educación, hidrocarburos), derechos antidumping, resoluciones liberatorias, etc.",tip:"El importador/exportador debe informar al agente si la mercancía tiene algún tratamiento especial o beneficio."},
+  's7-38':{num:"7.38 / 7.39",title:"Observación / Tipo de Observación",who:"aut",desc:"USO EXCLUSIVO DEL FUNCIONARIO ADUANERO. El funcionario de SUNAT registra aquí las incidencias que encuentre durante la revisión documentaria (Canal Naranja) o el reconocimiento físico (Canal Rojo). También se consigna el número del Boletín Químico cuando corresponda.",tip:"Ni el exportador/importador ni el agente pueden modificar estas casillas."},
+  s8:{num:"8",title:"Declarante – Firma y Sello del Agente de Aduanas",who:"age",desc:"El AGENTE DE ADUANAS (despachador de aduanas) es quien firma como declarante responsable. Consigna su nombre o razón social, RUC, fecha de formulación de la declaración, su firma manuscrita y sello como representante legal ante la Administración Aduanera.",tip:"El agente firma en nombre del importador/exportador en virtud del mandato legal establecido en la Ley General de Aduanas."},
+  s9:{num:"9",title:"N° Contenedores / Precintos",who:"age",desc:"El agente de aduanas indica las marcas y números que identifican los bultos, el o los números de contenedor(es) y precinto(s) correspondientes a las mercancías declaradas.",tip:""},
+  s10:{num:"10",title:"Diligencia Aduanera",who:"aut",desc:"USO EXCLUSIVO DEL FUNCIONARIO ADUANERO. Al concluir la revisión documentaria o el reconocimiento físico, el funcionario consigna la fecha, el código de la diligencia, su firma y sello. También indica el plazo autorizado y fecha de vencimiento en regímenes sujetos a plazo.",tip:""},
+  s11:{num:"11",title:"Control de Funcionario Aduanero",who:"aut",desc:"USO EXCLUSIVO DE LA AUTORIDAD ADUANERA. Solo para el régimen de Tránsito Aduanero y para las operaciones de regularización de regímenes de Admisión para Reexportación en el Mismo Estado y para Perfeccionamiento Activo.",tip:""},
+  s12:{num:"12",title:"Control de Embarque / Tornaguía",who:"aut",desc:"USO EXCLUSIVO DE LA AUTORIDAD ADUANERA. Se utiliza en el régimen de Tránsito Aduanero o de Reembarque para controlar el embarque de las mercancías.",tip:""},
+  s13:{num:"13",title:"Zona Primaria / Depósito Aduanero",who:"aut",desc:"En exportación: la autoridad de la zona primaria registra la fecha término de recepción y la cantidad/clase de bultos al ingresar la mercancía. En depósito aduanero: el depósito registra dentro de las 48 horas siguientes la conformidad de recepción.",tip:""},
+  s14:{num:"14",title:"Transportista",who:"aut",desc:"Casilla reservada para el Transportista encargado del traslado en regímenes de Tránsito Aduanero, Reembarque y Exportación Temporal. Indica bultos efectivamente exportados, peso bruto total, fecha y hora del último embarque.",tip:""},
+  s15:{num:"15",title:"Validación de Datos",who:"aut",desc:"Conjunto de caracteres generados automáticamente por el sistema SIGAD de la Administración Aduanera (SUNAT) al numerar la DAM. Sirve para identificar y verificar la transmisión electrónica.",tip:"Es generado automáticamente. Nadie lo llena manualmente."},
+};
+
+const LABELS = {
+  exp:{text:"Exportador / Importador (tú)",cls:"badge-exp"},
+  age:{text:"Agente de Aduanas",cls:"badge-age"},
+  aut:{text:"Autoridad Aduanera – SUNAT",cls:"badge-aut"},
+  none:{text:"No llenar / Sistema automático",cls:"badge-none"},
+};
+
+function show(key){
+  const d=INFO[key];if(!d)return;
+  document.getElementById('m-num').textContent='Casilla '+d.num;
+  document.getElementById('m-title').textContent=d.title;
+  const lb=LABELS[d.who];
+  document.getElementById('m-badge').innerHTML=`<span class="modal-badge ${lb.cls}">${lb.text}</span>`;
+  document.getElementById('m-desc').textContent=d.desc;
+  const tip=document.getElementById('m-tip');
+  if(d.tip){tip.style.display='block';tip.textContent='💡 '+d.tip;}
+  else{tip.style.display='none';}
+  document.getElementById('overlay').classList.add('open');
+}
+function closeAll(){document.getElementById('overlay').classList.remove('open');}
+function closeModal(e){if(e.target===document.getElementById('overlay'))closeAll();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll();});
+</script>
+</body>
+</html>
